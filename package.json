@@ -1,0 +1,29 @@
+{
+  "name": "whiteboard",
+  "version": "1.0.0",
+  "browserslist": [
+    "Chrome > 60"
+  ],
+  "dependencies": {
+    "@mapbox/polyline": "1.0.0",
+    "apollo-client-preset": "^1.0.8",
+    "apollo-link-ws": "^1.0.15",
+    "apollo-utilities": "^1.2.1",
+    "auto-bind": "2.0.0",
+    "bootstrap-colorpicker": "^3.0.3",
+    "graphql": "^14.1.1",
+    "jquery": "3.3.1",
+    "lodash": "4.17.11",
+    "nanoid": "^2.0.1",
+    "realm-graphql-client": "1.4.0",
+    "subscriptions-transport-ws": "^0.9.15",
+    "vanilla-picker": "^2.7.2"
+  },
+  "devDependencies": {
+    "parcel-bundler": "1.11.0"
+  },
+  "scripts": {
+    "start": "parcel ./index.html",
+    "build": "parcel build ./index.html"
+  }
+}

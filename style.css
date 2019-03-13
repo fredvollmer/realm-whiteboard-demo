@@ -1,0 +1,52 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    flex: 0 0 auto;
+    background: linear-gradient(to right, #ff5f6d, #ffc371); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    font-size: 30px;
+    font-family: Overpass, sans-serif;
+    color: white;
+    padding: 5px 20px;
+}
+
+.whiteboard {
+    display: block;
+}
+
+.whiteboard canvas {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+#viewer {
+    background-color: white;
+}
+
+#editor {
+    background-color: transparent;
+}
+
+#color-picker {
+    position: absolute;
+    right: 10px;
+    top: 70px;
+}
+
+button {
+    color: white;
+    background-color: transparent;
+    border: 1px solid #fff;
+    padding: 10px;
+    box-shadow: none;
+    cursor: pointer;
+}
