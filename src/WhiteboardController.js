@@ -5,9 +5,13 @@ import {gql} from 'apollo-client-preset';
 import WhiteboardPath from "./view/WhiteboardPath";
 import throttle from 'lodash/throttle';
 
-let editorCanvas, colorPicker;
+let editorCanvas;
 
 $(document).ready(setup);
+
+function handleRemoteUpdate({paths}) {
+    editorCanvas.setPaths(paths.map(({color, pathId, polyline}) => new WhiteboardPath(color, polyline, pathId)));
+}
 
 async function setup() {
     editorCanvas = new Canvas($('#editor'), true);
@@ -18,77 +22,45 @@ async function setup() {
 
     $('#btn-clear').click(clearWhiteboard);
 
+    // TODO: Subscribe for updates from Realm so we can get paths from other devices
     await Realm.subscribe(gql`
-        subscription {
-            paths {
-                pathId
-                color
-                polyline
-            }
-        }
+        
     `, handleRemoteUpdate);
 
-    const result = await Realm.query(gql`
-        query {
-            paths {
-                pathId
-                color
-                polyline
-            }
-        }
+    // TODO: Retrieve the initial paths already drawn on the whiteboard at load time
+    const initialQueryResult = await Realm.query(gql`
+
     `);
 
-    const paths = result.paths.map(({color, polyline, pathId}) => new WhiteboardPath(color, polyline, pathId));
+    const paths = initialQueryResult.paths.map(({color, polyline, pathId}) => new WhiteboardPath(color, polyline, pathId));
 
     editorCanvas.setPaths(paths);
 }
 
 function handlePathDrawn(newPath) {
+    // TODO: Handle an additional path being drawn on the whiteboard by the user
     Realm.update(gql`
-        mutation {
-            addPath(input: {
-                pathId: "${newPath.pathId}"
-                color: "${newPath.color}"
-                polyline: "${newPath.polyline}"
-            }) {
-                color
-                polyline
-                pathId
-            }
-        }
+
     `);
 }
 
 function handlePathDeleted(deletedPath) {
+    // TODO: Handle a path being deleted by the user
     Realm.update(gql`
-        mutation {
-            deletePath(pathId: "${deletedPath.pathId}")
-        }
+
     `);
 }
 
 function handlePathUpdated(updatedPath) {
+    // TODO: Handle an existing path being edited by the user, such as a color change
     Realm.update(gql`
-        mutation {
-            updatePath(input: {
-                pathId: "${updatedPath.pathId}"
-                color: "${updatedPath.color}"
-                polyline: "${updatedPath.polyline}"
-            }) {
-                pathId
-            }
-        }
+
     `);
 }
 
-function handleRemoteUpdate({paths}) {
-    editorCanvas.setPaths(paths.map(({color, pathId, polyline}) => new WhiteboardPath(color, polyline, pathId)));
-}
-
 function clearWhiteboard() {
+    // TODO: Handle the user clicking the clear button (remove all apths)
     Realm.update(gql`
-        mutation {
-            deletePaths
-        }
+
     `);
 }
