@@ -63,6 +63,9 @@ async function myAsyncFunction() {
 ```
 
 ## The goal
+
+<iframe src="https://drive.google.com/file/d/1xQzdELHVESG5v2g7Up8APm9vXLqhLxNm/preview?autoplay=1" />
+
 We want to build a shared, realtime whiteboard that runs in the browser and allows users to do the following:
 - Draw something (a `path`, to be precise--more on that later) on the shared whiteboard by clicking and dragging their mouse.
 - Change the color of an existing drawing by left-clicking on it.
