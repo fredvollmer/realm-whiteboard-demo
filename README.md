@@ -57,14 +57,14 @@ async function myAsyncFunction() {
     const x = 4;
     const result = await doSomethingAsynchronouLikeANetworkCall();
     // We won't hit this next line until the network call is done.
-    If await was omitted, we'd hit the next line immeidately, before the network op was done.
+    If await was omitted, we would hit the next line immeidately, before the network op was done.
     console.log(result);
 }
 ```
 
 ## The goal
 
-<iframe src="https://drive.google.com/file/d/1xQzdELHVESG5v2g7Up8APm9vXLqhLxNm/preview?autoplay=1" />
+<iframe src="https://drive.google.com/file/d/1xQzdELHVESG5v2g7Up8APm9vXLqhLxNm/preview?autoplay=1"></iframe>
 
 We want to build a shared, realtime whiteboard that runs in the browser and allows users to do the following:
 - Draw something (a `path`, to be precise--more on that later) on the shared whiteboard by clicking and dragging their mouse.
