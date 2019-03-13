@@ -1,5 +1,7 @@
 # Realm Whiteboard
 
+Slides: https://docs.google.com/presentation/d/1fQNdyIbpZKIKs24X6_fSbtZYiEPiR3RcjCv3oSBFyJ8/edit?usp=sharing
+
 This is going to be a breakneck-speed intro to two novel technologies: Realm and GraphQL.
 Realm is a realtime object store with a focus on mobile clients.
 GraphQL, which can be used to interact with Realm, is an alternative to REST API's that can prove to be superior.
@@ -49,7 +51,7 @@ npm run start
 
 ## Important prerequisite: async/await in JavaScript
 
-```
+```javascript
 // This function is async, meaning it can return before all contained operations are done running
 async function myAsyncFunction() {
     const x = 4;
@@ -108,9 +110,11 @@ Whereas REST focus on **resources**, GraphQL represents everything an API has to
 - With GraphQL, there's only a single endpoint, from which the client can ask for exactly what they need (or describe a mutation (update), or subscribe for changes...)
 - queries and mutations happen over HTTP; subscription updates are delivered via WebSocket
 
-#### Example: Blog
-Let's pretend we have `topics`, `posts` and `authors`
+#### Example: Social Network
+Let's pretend we have `users`, `posts` and `followers`.
+    - How are they related?
 
+See slides.
 
 ### Querying
 https://docs.realm.io/sync/graphql-web-access/graphiql-explorer#querying
@@ -127,11 +131,12 @@ query {
 Example
 ```
 query {
-    vehicles {
-        make
-        model
-        color
-        vehicleId
+    users {
+        userId
+        name
+        age
+        gender
+        lastLogin
     }
 }
 ```
@@ -149,11 +154,11 @@ query {
 Example
 ```
 query {
-    vehicles(query: "color = 'red' AND make STARTSWITH 'chev'") {
-        make
-        model
-        color
-        vehicleId
+    users(query: "gender = 'female' AND name STARTSWITH 'a'") {
+        name
+        age
+        gender
+        lastLogin
     }
 }
 ```
@@ -169,10 +174,11 @@ query {
 Example:
 ```
 query {
-    vehicle(vehicleId: "abc123") {
-        make
-        model
-        color
+    user(userId: "abc123") {
+        name
+        age
+        gender
+        lastLogin
     }
 }
 ```
@@ -193,13 +199,14 @@ mutation {
 Example:
 ```
 mutation {
-    addVehicle(input: {
-        vehicleId: "abc123"
-        color: "red"
-        make: "ford"
-        model: "F-100"
+    addUser(input: {
+        userId: "abc123"
+        name: "Homer"
+        age: 30
+        gender: "male"
+        lastLogin: "3/10/2019"
     }) {
-        vehicleId
+        userId
     }
 }
 ```
@@ -218,7 +225,7 @@ mutation {
 Example:
 ```
 mutation {
-    deleteVehicle(vehicleId: "abc123")
+    deleteUser(userId: "abc123")
 }
 ```
 
@@ -233,7 +240,7 @@ mutation {
 Example:
 ```
 mutation {
-    deleteVehicles
+    deleteUsers
 }
 ```
 
@@ -255,17 +262,18 @@ mutation {
 Example (updates make and color)
 ```
 mutation {
-    updateVehicle(input: {
-        vehicleId: "abc123"
-        color: "green"
-        make: "chevrolet"
+    updateUser(input: {
+        userId: "abc123"
+        lastLogin: "3/11/2019"
     }) {
-        vehicleId
+        userId
     }
 }
 ```
 
 ### Subscribing for updates
+https://docs.realm.io/sync/graphql-web-access/graphiql-explorer#subscribing
+
 We can subscribe to a query and Realm will alert us whenever the result set changes--be that an addition, deletion or mutation.
 Under the hood, the GraphQL client opens a WebSocket to the Realm server.
 
@@ -279,11 +287,11 @@ Example (tells us whenever the set of red vehicles in the databases changes in a
 *Note: the actual implementation in our client app will let you specify a function to be called in response to a subscription update*
 ```
 subscription {
-    vehicles(query: "color = 'red'") {
-        vehicleId
-        color
-        make
-        model
+    users(query: "gender = 'female'") {
+        name
+        age
+        gender
+        lastLogin
     }
 }
 ```
